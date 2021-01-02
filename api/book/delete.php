@@ -5,7 +5,7 @@
         return mysqli_real_escape_string($conn,$value);
     }
     $id     = $_POST['id'];
-    include('../../access_db.php');
+    include('../access_db.php');
     connect_db();
     $result  = array();
     $sql     = "DELETE FROM Buku WHERE Buku.id =".$id;

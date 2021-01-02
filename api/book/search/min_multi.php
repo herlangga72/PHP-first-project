@@ -1,20 +1,24 @@
 <?php
-    // header('Content-Type: application/json');
+    header('Content-Type: application/json');
+    include('../../access_db.php');
+    connect_db();
     function clean($value){
         global $conn;
         return mysqli_real_escape_string($conn,$value);
     }
-    $judul      = $_GET['judul'];
-    $pengarang  = $_GET['pengarang'];
-    $penerbit   = $_GET['penerbit'];
-    $tahunTerbit= $_GET['tahunTerbit'];
-    $limit      = $_GET['limit'];
+    
+    $judul      = clean($_GET['judul']);
+    $pengarang  = clean($_GET['pengarang']);
+    $penerbit   = clean($_GET['penerbit']);
+    $tahunTerbit= clean($_GET['tahunTerbit']);
+    $limit      = clean($_GET['limit']);
     
     if (is_null($_GET['start']) or !isset($_GET['start'])){
         $start  = 0;
     } else {
         $start  = clean($_GET['start']);
     }
+
     if (is_null($_GET['limit']) or !isset($_GET['limit'])){
         $limit  = 10;
     } else {
@@ -22,9 +26,10 @@
             case 1 : $limit=10; break;
             case 2 : $limit=15; break;
             case 3 : $limit=20; break;
-            default: $limit=30; }
+            default: $limit=30; 
+        }
     }
-        // make the sql code
+    
     $syntax     = 'WHERE' ;
     if (!empty($judul))         { $syntax .= " bukuJudul LIKE '%".$judul."%' AND"; }
     if (!empty($pengarang))     { $syntax .= " bukuPenulis LIKE '%".$pengarang."%' AND"; }
@@ -32,8 +37,7 @@
     if (!empty($tahunTerbit))   { $syntax .= " bukuTahunTerbit LIKE '%".$tahunTerbit."%' AND"; }
     if (strlen($syntax)==5)     { $syntax  = ""; }
     else                        { $syntax  = substr($syntax,0,-4); }
-    include('../../access_db.php');
-    connect_db();
+
     $hasil   = array();
     $result  = array();
     $sql     = "SELECT COUNT(*) AS 'JumlahPencarian' FROM Buku ".$syntax;

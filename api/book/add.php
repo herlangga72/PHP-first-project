@@ -1,5 +1,5 @@
 <?php
-    include('../../access_db.php');
+    include('../access_db.php');
     connect_db();
     function clean($value){
         global $conn;

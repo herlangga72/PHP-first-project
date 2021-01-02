@@ -1,7 +1,7 @@
 <?php
-    include('../../access_db.php');
+    include('../access_db.php');
     connect_db();
-    // header('Content-Type: application/json');
+    header('Content-Type: application/json');
     function clean($value){
         global $conn;
         return mysqli_real_escape_string($conn,$value);

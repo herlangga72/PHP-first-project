@@ -1,5 +1,4 @@
 <?php
-// https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc
     header('Content-Type: application/json');
     function clean($value){global $conn;return mysqli_real_escape_string($conn,$value);}
     $judul      = clean($_GET['judul']);
