@@ -53,6 +53,7 @@
               </div>
               <div class="flex-grow">
                 <h2 class="text-gray-900 text-lg title-font font-medium mb-3">Herlangga Yusuf Syailendra</h2>
+                <h3 class="text-gray-900 text-base title-font font-medium mb-3">Backend Dev<h3>
                 <p class="leading-relaxed text-base">Seseorang yang memiliki obsesi terhadap sesuatu yg jarang dipakai / mendalami dokumentasi yang di sediakan dari developer lain</p>
                 <a target="_blank" href="https://github.com/herlangga72" class="mt-3 text-indigo-500 inline-flex items-center">Github
                   <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
@@ -67,6 +68,7 @@
               </div>
               <div class="flex-grow">
                 <h2 class="text-gray-900 text-lg title-font font-medium mb-3">Damping Rizki Wisnu Adji</h2>
+                <h3 class="text-gray-900 text-base title-font font-medium mb-3">Frontend Dev<h3>
                 <p class="leading-relaxed text-base">Bukan siapa-siapa, Hanya lewat</p>
                 <a target="_blank" href="https://github.com/Damping-adji" class="mt-3 text-indigo-500 inline-flex items-center">Github
                   <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
@@ -80,8 +82,9 @@
                
               </div>
               <div class="flex-grow">
-                <h2 class="text-gray-900 text-lg title-font font-medium mb-3">Neptune</h2>
-                <p class="leading-relaxed text-base">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.</p>
+                <h2 class="text-gray-900 text-lg title-font font-medium mb-3"></h2>
+                <h3 class="text-gray-900 text-base title-font font-medium mb-3">Designer<h3>
+                <p class="leading-relaxed text-base"></p>
                 <a class="mt-3 text-indigo-500 inline-flex items-center">Learn More
                   <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
                     <path d="M5 12h14M12 5l7 7-7 7"></path>

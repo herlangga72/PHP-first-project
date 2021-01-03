@@ -5,7 +5,6 @@
         global $conn;
         return mysqli_real_escape_string($conn,$value);
     }
-    // test?
     header('Content-Type: application/json');
     $judul       = clean($_POST['judul']);
     $penulis     = clean($_POST['penulis']);
