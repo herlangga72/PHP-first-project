@@ -27,13 +27,12 @@
 </body>
 <script>
     var result;
-    result = document.getElementById('result');
     $(document).ready(function() {
         $('#cari').submit(function(e) {
             e.preventDefault();
             $.ajax({
                 type: "GET",
-                url: 'admin/buku/cari_buku_engine_reduced.php',
+                url: 'api/book/search/min_multi.php',
                 dataType: 'json',
                 success: function(response) {
                     var jsonData = response;

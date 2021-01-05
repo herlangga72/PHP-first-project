@@ -1,5 +1,5 @@
 <?php
-require_once('../access_db.php');
+require_once('access_db.php');
 connect_db();
 global $conn;
 if (!is_null($_POST['username'])) {
@@ -32,5 +32,4 @@ if (!is_null($_POST['username'])) {
 else{
   echo json_encode(array('success' => 2));
 }
-close_db();
 ?>
