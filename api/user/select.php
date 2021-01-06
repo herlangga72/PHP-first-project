@@ -5,7 +5,8 @@
         global $conn;
         return mysqli_real_escape_string($conn,$value);
     }
-    $sql = "SELECT username FROM user";
+    $name= clean($_GET['nama']);
+    $sql = "SELECT username FROM user WHERE " . $name;
     $result     = array();
     $data       = mysqli_query($conn, $sql);
     if ($data){

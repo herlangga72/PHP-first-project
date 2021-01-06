@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <script src="/static/js/jquery-ajax.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
+    <link href="/static/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/chartist.min.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body class="flex h-screen bg-gray-100 font-sans">
+    <!-- Side bar-->
+    <div id="sidebar" class="h-screen w-16 menu bg-white text-white px-4 flex items-center nunito static fixed shadow">
+        <ul class="list-reset" id='test'></ul>
+    </div>
+    <!-- /sidebar -->
+    <div class="flex flex-row flex-wrap flex-1 flex-grow content-start pl-16">
+        <div class="h-40 lg:h-20 w-full flex flex-wrap">
+            <h1 class="text-3xl p-5 bg-gray-100 z-30"> Peminjaman</h1>
+            <nav id="header1" class="bg-gray-100 w-auto flex-1 border-b-1 border-gray-300 order-1 lg:order-2">
+                <div class="flex flex-row-reverse h-full items-center" id="header">
+                </div>
+            </nav>
+        </div>
+        <script src="/static/js/header.js"></script>
+        <script src="/static/js/sidebar.js"></script>
+            <!--Dash Content -->
+            <div id="dash-content" class="bg-gray-300 py-6 lg:py-0 w-full lg:max-w-sm flex flex-wrap content-start">
+                <div class="flex" >
+                    <form id=search method="get" class="flex items-center w-full bg-gray-50 focus:outline-none focus:bg-white focus:shadow-1xl text-gray-700 font-bold rounded-full px-5 py-2 ml-5 mt-6 mr-1">
+                        <svg class="h-4 w-4 fill-current text-gray-600" viewBox="0 0 20 20">
+                            <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
+                        </svg>
+                        <input type="text" name="judul" class="pl-4 bg-white" placeholder="Search Judul Buku" >
+                        <button type="submit"></button>
+                    </form>
+                    <button class="w-16 bg-blue-400 rounded-b-3xl mr-1 pt-1 font-bold">+</button>
+                </div>
+                <div id="hasil-buku" class='flex flex-col p-3 space-y-2'></div>
+            </div>
+            <!--Graph Content -->
+            <div id="main-content" class="bg-gray-200 w-full min-h-full flex-1 space-x-4">
+                <div class="flex flex-1 flex-wrap">
+                    <div class="w-full xl:w-10/12 p-6">
+                        <form class="max-w-full lg:max-w-3xl xl:max-w-5xl">
+                            <div class="border-b-4 border-gray-300 p-3">
+                                <h5 class="font-bold text-black">Info Peminjaman</h5>
+                            </div>
+                            <div>
+                                <form id="info peminjaman" method="post">
+                                <div class="px-8 pt-14 grid grid-cols-2 gap-5" id="form_peminjaman">
+                                    <label for="id">ID</label>
+                                    <input id="id" name="id" type="text" class="rounded-lg pl-2 bg-gray-200" disabled>
+                                    <label for="peminjam">Peminjam</label>
+                                    <input id="peminjam" name="peminjam" type="text" class="rounded-lg pl-2">
+                                    <label for="tanggal-pinjam">Tanggal pinjam</label>
+                                    <input id="tanggal-pinjam" name="tanggal-pinjam" type="date" class="rounded-lg pl-2">
+                                    <label for="tanggal-kembali">Tanggal kembali</label>
+                                    <input id="tanggal-kembali" name="tanggal-kembali" type="date" class="rounded-lg pl-2">
+                                    <input id="hari-terlewati" name="hari-terlewati" type="number" class="rounded-lg pl-2" hidden>
+                                    <label for="pinjam">Buku yang dipinjam</label>
+                                    <button class="bg-indigo-400 rounded-lg text-white w-32 m-auto" onclick="add_menu();">Tambah</button>
+                                    <script>
+                                        var jumlah_buku=0;
+                                        save_for_reset = document.getElementById('form_peminjaman').innerHTML
+                                        function add_menu() {
+                                            jumlah_buku++;
+                                            text = document.getElementById('form_peminjaman').innerHTML + 
+                                            '<label for="pinjam">Buku ke-'+jumlah_buku+'</label>'+
+                                            '<input id="pinjam" name="pinjam-'+jumlah_buku+'" type="text" class="rounded-lg pl-2">';
+                                            document.getElementById('form_peminjaman').innerHTML =text;
+                                        }
+                                        function reset_form() {
+                                            jumlah_buku=0;
+                                            document.getElementById('form_peminjaman').innerHTML = save_for_reset;
+                                        }
+                                    </script>
+                                </div>
+                            </form>
+                                <div class="col-start-2 flex flex-grow-0 mt-5 flex-row-reverse w-full">
+                                    <button type="submit" class="w-18 col-start-2 bg-green-400 ml-2 text-white py-2 px-5 rounded-lg">Update</button>
+                                    <button type="reset" class="w-18 col-start-2 bg-red-400 text-white py-2 px-5 rounded-lg" onclick="reset_form();">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var result;
+            $(document).ready(function() {
+                $('#search').submit(function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        type: $(this).attr('method'),
+                        url: '/api/book/search/min_multi.php',
+                        dataType: 'json',
+                        data: $(this).serialize(),
+                        success: function(response) {
+                            var jsonData = response;
+                            console.log(jsonData)
+                            var text = "";
+                            for (i = 0; i < jsonData.hasil.length; i++){
+                                text += "<div class='flex flex-col p-5 bg-white'>";
+                                text += "<ul>" + jsonData.hasil[i].bukuJudul    + "</ul>";
+                                text += "<ul>" + jsonData.hasil[i].KodeBuku     + "</ul>";
+                                text += "<ul>" + jsonData.hasil[i].bukuPenulis  + "</ul>";
+                                text += "<ul>" + jsonData.hasil[i].bukuPenerbit + '</ul>';
+                                text += "</div>"
+                            }
+                            document.getElementById('hasil-buku').innerHTML = text;
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

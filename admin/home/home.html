@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="/static/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/chartist.min.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body class="flex h-screen bg-gray-100 font-sans">
+    <!-- Side bar-->
+    <div id="sidebar" class="h-screen w-16 menu bg-white text-white px-4 flex items-center nunito static fixed shadow">
+        <ul class="list-reset" id='test'></ul>
+    </div>
+    <!-- /sidebar -->
+    <div class="flex flex-row flex-wrap flex-1 flex-grow content-start pl-16">
+        <div class="h-40 lg:h-20 w-full flex flex-wrap">
+            <h1 class="text-3xl p-5 bg-gray-100 z-30"> Home</h1>
+            <nav id="header1" class="bg-gray-100 w-auto flex-1 border-b-1 border-gray-300 order-1 lg:order-2">
+                <div class="flex flex-row-reverse h-full items-center" id="header">
+                </div>
+            </nav>
+        </div>
+    <script src="/static/js/header.js"></script>
+    <script src="/static/js/sidebar.js"></script>
+        <!--Dash Content -->
+        <div id="dash-content" class="bg-gray-200 py-6 lg:py-0 w-full lg:max-w-sm flex flex-wrap content-start">
+            <script>
+                text = '';
+                menu= [['223','Peminjaman Hari ini'],['3232','Peminjaman Bulan ini']];
+                for (let i = 0; i < menu.length; i++) {
+                    text += ''+
+                    '<div class="w-1/2 lg:w-full">'+
+                    '    <div class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">'+
+                    '        <div class="flex flex-col items-center">'+
+                    '            <div class="flex-shrink pr-4">'+
+                    '                <div class="rounded-full p-3 bg-gray-300"></div>'+
+                    '            </div>'+
+                    '            <div class="flex-1">'+
+                    '                <h3 class="font-bold text-3xl text-center">'+menu[i][0]+'<span class="text-orange-500"></span></h3>'+
+                    '                <h5 class="font-bold text-gray-500 text-center">'+menu[i][1]+'</h5>'+
+                    '            </div>'+
+                    '        </div>'+
+                    '   </div>'+
+                    '</div>';
+                }
+                document.getElementById('dash-content').innerHTML=text;
+            </script>
+        </div>
+        <!--Graph Content -->
+        <div id="main-content" class="w-full flex-1">
+            <div class="flex flex-1 flex-wrap">
+                <div class="w-full xl:w-10/12 p-6">
+                    <div class="max-w-full lg:max-w-3xl xl:max-w-5xl">
+                        <div class="border-b p-3">
+                            <h5 class="font-bold text-black">Peminjaman Minggu Ini</h5>
+                        </div>
+                        <div class="p-5">
+                            <div class="ct-golden-section" id="chart1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/chartist.min.js"></script>
+    <script>
+        var mainChart = new Chartist.Line('#chart1', {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            series: [
+                [10, 25, 28, 45, 14, 30 ,50]
+            ]
+        }, {
+            low: 0,
+            showArea: true,
+            showPoint: true,
+            fullWidth: true
+        });
+    </script>
+</body>
+</html>
