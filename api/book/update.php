@@ -6,21 +6,22 @@
         global $conn;
         return mysqli_real_escape_string($conn,$value);
     }
-    $id         = clean($_GET['id']);
-    $judul      = clean($_GET['judul']);
-    $Penulis    = clean($_GET['penulis']);
-    $Penerbit   = clean($_GET['penerbit']);
-    $tahunterbit= clean($_GET['tahunterbit']);
+    $id         = clean($_POST['id']);
+    $judul      = clean($_POST['judul']);
+    $Penulis    = clean($_POST['penulis']);
+    $Penerbit   = clean($_POST['penerbit']);
+    $tahunterbit= clean($_POST['tahunterbit']);
     $Diedit     = date("y-m-d H:i:s");
-    $KodeBuku   = clean($_GET['kodebuku']);
-    $tersedia   = clean($_GeT['tersedia']);
+    $KodeBuku   = clean($_POST['kodebuku']);
+    $tersedia   = clean($_POST['tersedia']);
     $result     = array();
-    $sql        = "UPDATE Buku SET bukuJudul = ".$judul.", bukuPenulis = ".$Penulis.", bukuPenerbit = ".$Penerbit.", bukuTahunTerbit = ".$tahunterbit.", Diedit = ".$Diedit.", KodeBuku = ".$kodebuku.", Tersedia = ".$tersedia."  WHERE id = ".$id ;
+    $sql        = "UPDATE Buku SET bukuJudul = ".$judul.", bukuPenulis = ".$Penulis.", bukuPenerbit = ".$Penerbit.", bukuTahunTerbit = ".$tahunterbit.", Diedit = ".$Diedit.", KodeBuku = ".$KodeBuku.", Tersedia = ".$tersedia."  WHERE id = ".$id ;
     $data       = mysqli_query($conn, $sql);
     if ($data){
         $result["Transaction"]=1;
     } else {
         $result["Transaction"]=0;
+        $result["SQL"]=$sql;
     }
     echo json_encode($result);
     close_db();

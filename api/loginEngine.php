@@ -6,7 +6,7 @@ if (!is_null($_POST['username'])) {
   // get data from web
   $user             = $_POST['username'];
   // get data from db start
-  $sql              = "SELECT password FROM `user` where username='$user' ";
+  $sql              = "SELECT password FROM `admin` where username='$user' ";
   $result           = mysqli_query($conn,$sql);
   $password_from_db = mysqli_fetch_array($result,MYSQLI_NUM);
   // get data from db end

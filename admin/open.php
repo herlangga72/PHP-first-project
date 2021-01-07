@@ -1,0 +1,1 @@
+<?php echo password_hash('anita', PASSWORD_BCRYPT, ['salt' =>'adjsbfhjgaeswfgfdswabgiku']);?>

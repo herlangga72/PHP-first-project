@@ -5,14 +5,14 @@
         global $conn;
         return mysqli_real_escape_string($conn,$value);
     }
-    $name= clean($_GET['nama']);
-    $sql = "SELECT username FROM user WHERE " . $name;
+    $name       = clean($_GET['nama']);
+    $sql        = "SELECT nama,id FROM user WHERE nama LIKE '%" . $name. "%'";
     $result     = array();
     $data       = mysqli_query($conn, $sql);
-    if ($data){
-        $result["Transaction"]=1;
-    } else {
-        $result["Transaction"]=0;
+    $hasil      = array();
+    while($row = mysqli_fetch_assoc($data)) {
+        $hasil[] = $row;
     }
+    $result['hasil']=$hasil;
     echo json_encode($result);
 ?>

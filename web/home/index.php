@@ -31,9 +31,6 @@
               <a class="mr-5 hover:text-gray-900">Pencarian</a>
               <a class="mr-5 hover:text-gray-900">About</a>
             </nav>
-            <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"> Logout
-              <img src="../../static/login-24px.svg" alt="Logout-icon">
-            </button>
           </div>
         </header>
         <section class="text-gray-600 bg-gray-200 ">
@@ -47,14 +44,14 @@
           </div>
           <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4 md:space-y-0 space-y-6" id="id">
           <script>
-            index=[['Herlangga Yusuf Syailendra','Backend Dev','Seseorang yang memiliki obsesi terhadap sesuatu yg jarang dipakai / mendalami dokumentasi yang di sediakan dari developer lain','https://github.com/herlangga72'],
+            index=[['Herlangga Yusuf Syailendra','Backend Dev','Seseorang yang memiliki obsesi terhadap sesuatu yg jarang dipakai / mendalami dokumentasi yang di sediakan dari developer lain L200180186','https://github.com/herlangga72'],
             ['Damping Wisnu Adji','Frontend Dev','Bukan siapa-siapa, Hanya lewat','https://github.com/Damping-adji'],
-            ['Anita','Design UI','','','']];
+            ['Anita Lusi Romadhon','Design UI','Seorang mahasiswi dari universitas Muhammadiyah Surakarta','https://github.com/L200180153']];
             text=''
             for (i = 0; i < index.length; i++){
               text+=''+
                 '<div class="p-4 md:w-1/3 flex flex-col text-center items-center">'+
-                '<div class="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5 flex-shrink-0"></div>'+
+                //'<div class="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5 flex-shrink-0"></div>'+
                 '<div class="flex-grow">'+
                 '<h2 class="text-gray-900 text-lg title-font font-medium mb-3">'+index[i][0]+'</h2>'+
                 '<h3 class="text-gray-900 text-base title-font font-medium mb-3">'+index[i][1]+'<h3>'+
