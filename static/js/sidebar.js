@@ -1,9 +1,9 @@
 text = '';
-menu= [ ['/admin/home','Home','<img src="/static/icons/home.svg">'],
-        ['/admin/staff','Staff','<img src="/static/icons/account-tie.svg">'],
-        ['/admin/buku','Buku','<img src="/static/icons/book.svg">'],
-        ['/admin/peminjaman','Peminjaman','<img src="/static/icons/book-clock.svg">'],
-        ['/admin/anggota','Anggota','<img src="/static/icons/account-group.svg">']];
+menu= [ ['/admin/home/','Home','<img src="/static/icons/home.svg">'],
+        ['/admin/staff/','Staff','<img src="/static/icons/account-tie.svg">'],
+        ['/admin/buku/','Buku','<img src="/static/icons/book.svg">'],
+        ['/admin/peminjaman/peminjaman.html','Peminjaman','<img src="/static/icons/book-clock.svg">'],
+        ['/admin/anggota/','Anggota','<img src="/static/icons/account-group.svg">']];
 for (let i = 0; i < menu.length; i++) {
     text += ''+
     '<li class="my-2 md:my-0">'+

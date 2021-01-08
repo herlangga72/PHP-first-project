@@ -33,62 +33,55 @@
                         <svg class="h-4 w-4 fill-current text-gray-600" viewBox="0 0 20 20">
                             <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
                         </svg>
-                        <input type="text" name="judul" class="pl-4 bg-white" placeholder="Search Nama Peminjam" >
+                        <input type="text" name="judul" class="pl-4" placeholder="Search Nama Peminjam" >
                         <button type="submit"></button>
                     </form>
                 </div>
-                <div id="hasil-anggota" class='flex flex-col p-3 space-y-2 w-full'></div>
+                <form id="hasil-peminjam" method="GET" class='flex flex-col p-3 space-y-2 w-full'></form>
             </div>
-            <!--Graph Content -->
             <div id="main-content" class="bg-gray-200 w-full min-h-full flex-1 space-x-4">
                 <div class="flex flex-1 flex-wrap">
                     <div class="w-full xl:w-10/12 p-6">
-                        <form class="max-w-full lg:max-w-3xl xl:max-w-5xl">
+                        <div class="max-w-full lg:max-w-3xl xl:max-w-5xl">
                             <div class="border-b-4 border-gray-300 p-3">
                                 <h5 class="font-bold text-black">Info Peminjaman</h5>
                             </div>
                             <div>
-                                <form id="info peminjaman" method="post">
-                                <div class="px-8 pt-14 grid grid-cols-2 gap-5" id="form_peminjaman">
-                                    <label for="id">ID</label>
-                                    <input id="id" name="id" type="text" class="rounded-lg pl-2 bg-gray-200" disabled>
-                                    <label for="peminjam">Peminjam</label>
-                                    <input id="peminjam" name="peminjam" type="text" class="rounded-lg pl-2">
-                                    <label for="tanggal-kembali">Tanggal kembali</label>
-                                    <input id="tanggal-kembali" name="tanggal-kembali" type="date" class="rounded-lg pl-2">
-                                    <label for="pinjam">Buku yang dipinjam</label>
-                                    <div></div>
-                                    <script>
-                                        var jumlah_buku=0;
-                                        save_for_reset = document.getElementById('form_peminjaman').innerHTML
-                                        while (jumlah_buku<7){
-                                            jumlah_buku++;
-                                            text = document.getElementById('form_peminjaman').innerHTML + 
-                                            '<label for="buku'+jumlah_buku+'_kodebuku" >Buku ke-'+jumlah_buku+'</label>'+
-                                            '<input id="buku'+jumlah_buku+'_kodebuku" name="buku'+jumlah_buku+'_kodebuku" type="text" class="rounded-lg pl-2">';
-                                            $('#form_peminjaman').html(text);
-                                        }
-                                    </script>
-                                </div>
-                            </form>
-                                <div class="col-start-2 flex flex-grow-0 mt-5 flex-row-reverse w-full">
-                                    <button type="submit" class="col-start-2 bg-green-600 ml-2 text-white py-2 px-5 rounded-lg">Update</button>
-                                    <button type="reset" class="col-start-2 bg-red-600 text-white py-2 px-5 rounded-lg">Reset</button>
-                                </div>
+                                <form id="insert-data" method="POST">
+                                    <div class="px-8 pt-14 grid grid-cols-2 gap-5" id="form_peminjaman">
+                                        <label for="form-id">ID</label>
+                                        <input id="form-id" name="id" type="text" class="rounded-lg pl-2 bg-gray-200" readonly>
+                                        <label for="form-peminjam">Peminjam</label>
+                                        <input id="form-peminjam" name="peminjam" type="text" class="rounded-lg pl-2">
+                                        <label for="form-tanggalkembali">Tanggal kembali</label>
+                                        <input id="form-tanggalkembali" name="tanggalkembali" type="date" class="rounded-lg pl-2">
+                                        <label for="pinjam">Buku yang dipinjam</label>
+                                        <span></span>
+                                        <label for="form-buku1" >Buku ke-1</label>
+                                        <input id="form-buku1" name="buku1_kodebuku" type="text" class="rounded-lg pl-2">
+                                        <label for="form-buku2" >Buku ke-2</label>
+                                        <input id="form-buku2" name="buku2_kodebuku" type="text" class="rounded-lg pl-2">
+                                        <label for="form-buku3" >Buku ke-3</label>
+                                        <input id="form-buku3" name="buku3_kodebuku" type="text" class="rounded-lg pl-2">
+                                    </div>
+                                    <div class="col-start-2 flex flex-grow-0 mt-5 flex-row-reverse w-full">
+                                        <button type="submit" class="col-start-2 bg-green-600 ml-2 text-white py-2 px-5 rounded-lg">Update</button>
+                                        <button type="reset" class="col-start-2 bg-red-600 text-white py-2 px-5 rounded-lg">Reset</button>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <script>
-        var button;
         $(document).ready(function() {
             $('#search').submit(function(e) {
                 e.preventDefault();
                 $.ajax({
                     type: $(this).attr('method'),
-                    url: '/api/anggota/select.php',
+                    url: '/api/peminjaman/search.php',
                     dataType: 'json',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -98,14 +91,63 @@
                         for (i = 0; i < jsonData.hasil.length; i++){
                             text += "<div onclick='tombol()' class='flex w-full flex-col p-5 bg-white' >"
                             text += "<input name='id' type='radio' id="+jsonData.hasil[i].id+" value='"+jsonData.hasil[i].id+"' class=hidden>";
-                            text += "<label for="+jsonData.hasil[i].id+"><h2 class=font-bold>" + jsonData.hasil[i].nama    + "</h2>";
+                            text += "<label for="+jsonData.hasil[i].id+"><h2 class=font-bold>" + jsonData.hasil[i].peminjam    + "</h2>";
                             text += "</label> </div>";
                         }
-                        $('#hasil-anggota').html(text+'<button type="submit" id=tekan></button>');
+                        $('#hasil-peminjam').html(text+'<button type="submit" id="tekan" ></button>');
+                    }
+                });
+            });
+            $('#hasil-peminjam').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: $(this).attr('method'),
+                    url: '/api/peminjaman/search_single.php',
+                    dataType: 'json',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        var jsonData = response;
+                        console.log(jsonData);
+                        $('#form-id').attr("value",jsonData.hasil.id);
+                        $('#form-peminjam').attr("value",jsonData.hasil.peminjam);
+                        $('#form-tanggalkembali').attr("value",'');
+                        $('#form-buku1').attr("value",jsonData.hasil.buku1_kodebuku);
+                        $('#form-buku2').attr("value",jsonData.hasil.buku2_kodebuku);
+                        $('#form-buku3').attr("value",jsonData.hasil.buku3_kodebuku);
+                    }
+                });
+            });
+            $('#insert-data').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: $(this).attr('method'),
+                    url: '/api/peminjaman/add.php',
+                    dataType: 'json',
+                    data: $(this).serialize() ,
+                    success: function(response) {
+                        var jsonData = response;
+                        if (jsonData.Transaction==1){
+                            alert ("data berhasil dimasukan");
+                            hapus_semua();
+                        }else{
+                            alert ('Try again');
+                        }
                     }
                 });
             });
         });
-        </script>
+        function tombol() {
+            document.getElementById('tekan').click();
+        };
+        function hapus_semua() {
+            $('#hasil-peminjam').html('');
+            $('#form-id').attr("value",'');
+            $('#form-peminjam').attr("value",'');
+            $('#form-tanggalkembali').attr("value",'');
+            $('#form-buku1').attr("value",'');
+            $('#form-buku2').attr("value",'');
+            $('#form-buku3').attr("value",'');
+        }
+        </script> 
     </body>
 </html>
