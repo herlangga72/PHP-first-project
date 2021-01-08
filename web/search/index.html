@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- <base href="http://127.0.0.1"> -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/static/css/tailwind.css">
@@ -10,7 +9,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
         <style>
           #imgBg {
-              background-image: url('../../static/HOME.jpeg');
+              background-image: url('/static/icons/HOME.jpeg');
               background-size: cover;
               height: 50vh;
           }
@@ -25,13 +24,10 @@
               <span class="ml-3 text-xl" >Perpustakaan Karangbangun</span>
           </a>
           <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-            <a class="mr-5 hover:text-gray-900">Home</a>
-            <a class="mr-5 hover:text-gray-900">Pencarian</a>
-            <a class="mr-5 hover:text-gray-900">About</a>
+            <a href="/web/home/" class="mr-5 hover:text-gray-900">Home</a>
+            <a href="/web/search/" class="mr-5 hover:text-gray-900">Search</a>
+            <a href="/web/about/" class="mr-5 hover:text-gray-900">About</a>
           </nav>
-          <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"> Logout
-            <img src="../../static/login-24px.svg" alt="Logout-icon">
-          </button>
         </div>
       </header>
       <section class="text-gray-600 body-font">
@@ -75,8 +71,9 @@
           e.preventDefault();
           $.ajax({
             type:     "GET",
-            url:      '../../admin/buku/cari_buku_engine.php',
+            url:      '/api/book/search/min_multi.php',
             dataType: 'json',
+            data : $(this).serialize(),
             success:  function(response) {
               document.getElementById("result").classList.remove("hidden");
               var jsonData = response;
@@ -90,7 +87,7 @@
                 text += "<ul> Penerbit : "  + jsonData.hasil[i].bukuPenerbit + '</ul>';
                 text += "</div>"
               }
-              document.getElementById('result').innerHTML = text;
+              $('#result').html(text);
             }
           });
         });

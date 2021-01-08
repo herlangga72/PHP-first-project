@@ -13,7 +13,7 @@ if (!is_null($_POST['username'])) {
 
   // apa username ada?? 
   if (!is_null($password_from_db)){
-    // checking password using encryption
+    // checking password using hashing
     $checked          = password_verify($_POST['password'],$password_from_db[0]);
     if ($checked) {
       session_start();

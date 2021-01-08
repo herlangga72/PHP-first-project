@@ -24,61 +24,31 @@
                 </div>
             </nav>
         </div>
-    <script src="/static/js/header.js"></script>
-    <script src="/static/js/sidebar.js"></script>
-        <!--Dash Content -->
-        <div id="dash-content" class="bg-gray-200 py-6 lg:py-0 w-full lg:max-w-sm flex flex-wrap content-start">
-            <script>
-                text = '';
-                menu= [['223','Peminjaman Hari ini'],['3232','Peminjaman Bulan ini']];
-                for (let i = 0; i < menu.length; i++) {
-                    text += ''+
-                    '<div class="w-1/2 lg:w-full">'+
-                    '    <div class="border-2 border-gray-400 border-dashed hover:border-transparent hover:bg-white hover:shadow-xl rounded p-6 m-2 md:mx-10 md:my-6">'+
-                    '        <div class="flex flex-col items-center">'+
-                    '            <div class="flex-shrink pr-4">'+
-                    '                <div class="rounded-full p-3 bg-gray-300"></div>'+
-                    '            </div>'+
-                    '            <div class="flex-1">'+
-                    '                <h3 class="font-bold text-3xl text-center">'+menu[i][0]+'<span class="text-orange-500"></span></h3>'+
-                    '                <h5 class="font-bold text-gray-500 text-center">'+menu[i][1]+'</h5>'+
-                    '            </div>'+
-                    '        </div>'+
-                    '   </div>'+
-                    '</div>';
-                }
-                document.getElementById('dash-content').innerHTML=text;
-            </script>
-        </div>
-        <!--Graph Content -->
+        <script src="/static/js/header.js"></script>
+        <script src="/static/js/sidebar.js"></script>
         <div id="main-content" class="w-full flex-1">
             <div class="flex flex-1 flex-wrap">
                 <div class="w-full xl:w-10/12 p-6">
                     <div class="max-w-full lg:max-w-3xl xl:max-w-5xl">
-                        <div class="border-b p-3">
-                            <h5 class="font-bold text-black">Peminjaman Minggu Ini</h5>
-                        </div>
-                        <div class="p-5">
-                            <div class="ct-golden-section" id="chart1"></div>
+                        <div class="p-20 ">
+                            <h1 class=text-2xl>
+                                Selamat Datang di Admin Panel :
+                            </h1>                   
+                            <h2 class="text-lg mt-10">
+                                Menu yg dapat diakses lewat side panel disebelah kanan <br>
+                                Menu meliputi;
+                                <div class=ml-20>
+                                    <li>Staff</li>
+                                    <li>Buku</li>
+                                    <li>Peminjaman</li>
+                                    <li>Anggota</li>
+                                </div>
+                            </h2>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="/static/js/chartist.min.js"></script>
-    <script>
-        var mainChart = new Chartist.Line('#chart1', {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            series: [
-                [10, 25, 28, 45, 14, 30 ,50]
-            ]
-        }, {
-            low: 0,
-            showArea: true,
-            showPoint: true,
-            fullWidth: true
-        });
-    </script>
 </body>
 </html>

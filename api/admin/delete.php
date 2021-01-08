@@ -5,9 +5,9 @@
         global $conn;
         return mysqli_real_escape_string($conn,$value);
     }
-    $user = clean($_GET['username']);
+    $id = clean($_POST['id']);
     // $user = clean($_POST['username']);
-    $delete = "DELETE FROM `admin` WHERE username = '".$user."'";
+    $delete     = "DELETE FROM `admin` WHERE id= '".$id."'";
     $result     = array();
     $data       = mysqli_query($conn, $delete);
     if ($data){

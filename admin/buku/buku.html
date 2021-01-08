@@ -57,7 +57,7 @@
                             <label for="form-penulis">Penulis</label>
                             <input id="form-penulis" name="penulis" type="text" class="rounded-lg pl-1">
                             <label for="form-penerbit">Penerbit</label>
-                            <input id="form-penerbit" name="penulis" type="text" class="rounded-lg pl-1">
+                            <input id="form-penerbit" name="penerbit" type="text" class="rounded-lg pl-1">
                             <label for="form-tahunterbit">Tahun terbit</label>
                             <input id=form-tahunterbit type="number" min="1700" max="2099" step="1" value="2021" id="tahunterbit" name="tahunterbit"  class="rounded-lg pl-1" >
                             <label for="form-kodebuku">Kode buku</label>
@@ -66,7 +66,7 @@
                             <input id="form-tersedia" name="tersedia" type="text" class="rounded-lg pl-1">                         
                             <div id=form-button class="col-start-2 flex flex-grow-0 flex-row-reverse w-full">
                                 <button type="submit" class="col-start-2 bg-green-600 ml-2 text-white py-2 px-5 rounded-lg">Update / Masukan</button>
-                                <button type="reset" class="col-start-2 bg-red-600 text-white py-2 px-5 rounded-lg">Reset</button>
+                                <button type="reset" id="tombol_reset" class="col-start-2 bg-red-600 text-white py-2 px-5 rounded-lg">Reset</button>
                             </div>
                         </form>
                     </div>
@@ -116,7 +116,7 @@
                         $('#form-kodebuku').attr("value",jsonData.hasil.KodeBuku);
                         $('#form-tersedia').attr("value",jsonData.hasil.Tersedia);
                         if(!button){
-                            $("#form-button").append('<button onclick="buang()" type=button class="mr-2 col-start-2 bg-red-600 text-white py-2 px-5 rounded-lg" >Delete<button>');
+                            $("#form-button").append('<button id="hapus" onclick="buang()" type=button class="mr-2 col-start-2 bg-red-600 text-white py-2 px-5 rounded-lg" >Delete<button>');
                             button=1;
                         }
                     }
@@ -133,6 +133,7 @@
                         var jsonData = response;
                         if (jsonData.Transaction==1){
                             alert ("data berhasil dimasukan");
+                            hapus_semua();
                         }else{
                             alert ('Try again');
                         }
@@ -153,11 +154,24 @@
                     var jsonData = response;
                     if (jsonData.Transaction==1){
                         alert ("data berhasil dibuang");
+                        hapus_semua();
                     }else{
                         alert ('Try again');
                     }
                 }
             });
+        }
+        function hapus_semua() {
+            $('#hasil-buku').html('');
+            $('#form-id').attr("value",'');
+            $('#form-judul').attr("value",'');
+            $('#form-penulis').attr("value",'');
+            $('#form-penerbit').attr("value",'');
+            $('#form-tahunterbit').attr("value",'');
+            $('#form-kodebuku').attr("value",'');
+            $('#form-tersedia').attr("value",'');
+            $('#tombol_reset').click();
+            $('#hapus').remove();
         }
     </script>
 </body>

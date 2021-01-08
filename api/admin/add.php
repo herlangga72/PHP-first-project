@@ -5,12 +5,23 @@
         global $conn;
         return mysqli_real_escape_string($conn,$value);
     }
-    $user = clean($_GET['username']);
-    $pass = clean($_GET['password']);
-    // $user = clean($_POST['username']);
-    // $pass = clean($_POST['password']);
-    $hash = password_hash($pass, PASSWORD_BCRYPT, ['salt' =>'adjsbfhjgaeswfgfdswabgiku']);
-    $new = "INSERT INTO `admin` (`username`, `password`) VALUES ('$user', '$hash')";
+    $user         = clean($_POST['nama']);
+    $pass         = clean($_POST['password']);
+    $id           = clean($_POST['id']);
+    $tempatinggal = clean($_POST['tempat-tinggal']);
+    $tanggallahir = clean($_POST['tanggal-lahir']);
+    if($pass){
+        $hash = password_hash($pass, PASSWORD_BCRYPT, ['salt' =>'adjsbfhjgaeswfgfdswabgiku']);
+    }
+    if ($id && $hash){
+        $new = "UPDATE `admin` SET `username`='$user', `password`='$hash',`tempattinggal`='$tempatinggal', `tanggallahir`='$tanggallahir' WHERE id='$id' ";
+    }
+    elseif ($id) {
+        $new = "UPDATE `admin` SET `username`='$user',`tempattinggal`='$tempatinggal', `tanggallahir`='$tanggallahir' WHERE id='$id' ";
+    }
+    else {
+        $new = "INSERT INTO `admin` (`username`, `password`, `tempattinggal`, `tanggallahir`) VALUES ('$user', '$hash','$tempatinggal' ,'$tanggallahir')";
+    }
     $result     = array();
     $data       = mysqli_query($conn, $new);
     if ($data){

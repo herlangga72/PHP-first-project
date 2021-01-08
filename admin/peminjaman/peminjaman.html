@@ -29,16 +29,15 @@
             <!--Dash Content -->
             <div id="dash-content" class="bg-gray-300 py-6 lg:py-0 w-full lg:max-w-sm flex flex-wrap content-start">
                 <div class="flex" >
-                    <form id=search method="get" class="flex items-center w-full bg-gray-50 focus:outline-none focus:bg-white focus:shadow-1xl text-gray-700 font-bold rounded-full px-5 py-2 ml-5 mt-6 mr-1">
+                    <form id=search method="get" class="flex w-full items-center w-full bg-gray-50 focus:outline-none focus:bg-white focus:shadow-1xl text-gray-700 font-bold rounded-full px-5 py-2 ml-5 mt-6 mr-1">
                         <svg class="h-4 w-4 fill-current text-gray-600" viewBox="0 0 20 20">
                             <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
                         </svg>
-                        <input type="text" name="judul" class="pl-4 bg-white" placeholder="Search Judul Buku" >
+                        <input type="text" name="judul" class="pl-4 bg-white" placeholder="Search Nama Peminjam" >
                         <button type="submit"></button>
                     </form>
-                    
                 </div>
-                <div id="hasil-buku" class='flex flex-col p-3 space-y-2'></div>
+                <div id="hasil-anggota" class='flex flex-col p-3 space-y-2 w-full'></div>
             </div>
             <!--Graph Content -->
             <div id="main-content" class="bg-gray-200 w-full min-h-full flex-1 space-x-4">
@@ -55,33 +54,26 @@
                                     <input id="id" name="id" type="text" class="rounded-lg pl-2 bg-gray-200" disabled>
                                     <label for="peminjam">Peminjam</label>
                                     <input id="peminjam" name="peminjam" type="text" class="rounded-lg pl-2">
-                                    <label for="tanggal-pinjam">Tanggal pinjam</label>
-                                    <input id="tanggal-pinjam" name="tanggal-pinjam" type="date" class="rounded-lg pl-2">
                                     <label for="tanggal-kembali">Tanggal kembali</label>
                                     <input id="tanggal-kembali" name="tanggal-kembali" type="date" class="rounded-lg pl-2">
-                                    <input id="hari-terlewati" name="hari-terlewati" type="number" class="rounded-lg pl-2" hidden>
                                     <label for="pinjam">Buku yang dipinjam</label>
-                                    <button class="bg-indigo-400 rounded-lg text-white w-32 m-auto" onclick="add_menu();">Tambah</button>
+                                    <div></div>
                                     <script>
                                         var jumlah_buku=0;
                                         save_for_reset = document.getElementById('form_peminjaman').innerHTML
-                                        function add_menu() {
+                                        while (jumlah_buku<7){
                                             jumlah_buku++;
                                             text = document.getElementById('form_peminjaman').innerHTML + 
-                                            '<label for="pinjam">Buku ke-'+jumlah_buku+'</label>'+
-                                            '<input id="pinjam" name="pinjam-'+jumlah_buku+'" type="text" class="rounded-lg pl-2">';
-                                            document.getElementById('form_peminjaman').innerHTML =text;
-                                        }
-                                        function reset_form() {
-                                            jumlah_buku=0;
-                                            document.getElementById('form_peminjaman').innerHTML = save_for_reset;
+                                            '<label for="buku'+jumlah_buku+'_kodebuku" >Buku ke-'+jumlah_buku+'</label>'+
+                                            '<input id="buku'+jumlah_buku+'_kodebuku" name="buku'+jumlah_buku+'_kodebuku" type="text" class="rounded-lg pl-2">';
+                                            $('#form_peminjaman').html(text);
                                         }
                                     </script>
                                 </div>
                             </form>
                                 <div class="col-start-2 flex flex-grow-0 mt-5 flex-row-reverse w-full">
-                                    <button type="submit" class="w-18 col-start-2 bg-green-400 ml-2 text-white py-2 px-5 rounded-lg">Update</button>
-                                    <button type="reset" class="w-18 col-start-2 bg-red-400 text-white py-2 px-5 rounded-lg" onclick="reset_form();">Reset</button>
+                                    <button type="submit" class="col-start-2 bg-green-600 ml-2 text-white py-2 px-5 rounded-lg">Update</button>
+                                    <button type="reset" class="col-start-2 bg-red-600 text-white py-2 px-5 rounded-lg">Reset</button>
                                 </div>
                             </div>
                         </form>
@@ -90,32 +82,30 @@
             </div>
         </div>
         <script>
-            var result;
-            $(document).ready(function() {
-                $('#search').submit(function(e) {
-                    e.preventDefault();
-                    $.ajax({
-                        type: $(this).attr('method'),
-                        url: '/api/book/search/min_multi.php',
-                        dataType: 'json',
-                        data: $(this).serialize(),
-                        success: function(response) {
-                            var jsonData = response;
-                            console.log(jsonData)
-                            var text = "";
-                            for (i = 0; i < jsonData.hasil.length; i++){
-                                text += "<div class='flex flex-col p-5 bg-white'>";
-                                text += "<ul>" + jsonData.hasil[i].bukuJudul    + "</ul>";
-                                text += "<ul>" + jsonData.hasil[i].KodeBuku     + "</ul>";
-                                text += "<ul>" + jsonData.hasil[i].bukuPenulis  + "</ul>";
-                                text += "<ul>" + jsonData.hasil[i].bukuPenerbit + '</ul>';
-                                text += "</div>"
-                            }
-                            document.getElementById('hasil-buku').innerHTML = text;
+        var button;
+        $(document).ready(function() {
+            $('#search').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: $(this).attr('method'),
+                    url: '/api/anggota/select.php',
+                    dataType: 'json',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        var jsonData = response;
+                        console.log(jsonData);
+                        var text = "";
+                        for (i = 0; i < jsonData.hasil.length; i++){
+                            text += "<div onclick='tombol()' class='flex w-full flex-col p-5 bg-white' >"
+                            text += "<input name='id' type='radio' id="+jsonData.hasil[i].id+" value='"+jsonData.hasil[i].id+"' class=hidden>";
+                            text += "<label for="+jsonData.hasil[i].id+"><h2 class=font-bold>" + jsonData.hasil[i].nama    + "</h2>";
+                            text += "</label> </div>";
                         }
-                    });
+                        $('#hasil-anggota').html(text+'<button type="submit" id=tekan></button>');
+                    }
                 });
             });
+        });
         </script>
     </body>
 </html>

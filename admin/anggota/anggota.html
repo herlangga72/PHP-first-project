@@ -36,9 +36,8 @@
                 </svg>
                 <input id="search-toggle" type="search" name="judul" class="pl-4" placeholder="Search Anggota"><button type="submit"></button>
             </form>
-            
         </div>
-        <form id="hasil-buku" method="GET" class='flex w-full flex-col p-3 space-y-2'>
+        <form id="hasil-anggota" method="GET" class='flex w-full flex-col p-3 space-y-2'>
         </form>
     </div>
         <!--Graph Content -->
@@ -49,22 +48,20 @@
                         <div class="border-b-4 border-gray-300 p-3">
                             <h5 class="font-bold text-black">Info Anggota</h5>
                         </div>
-                        <div class="px-8 pt-14 grid grid-cols-2 gap-5">
+                        <form id=insert-data method=POST class="px-8 pt-14 grid grid-cols-2 gap-5">
                             <label for="form-id">ID</label>
                             <input id="form-id" name="id" type="text" class="rounded-lg pl-1">
                             <label for="form-nama">Nama</label>
-                            <input id="form-nama" name="nama" type="text" class="rounded-lg pl-1">
+                            <input id="form-nama" name="nama" type="text" class="rounded-lg pl-1" required>
                             <label for="form-tanggallahir">Tanggal lahir</label>
-                            <input id="form-tanggallahir" name="umur" type="date" class="rounded-lg pl-1">
+                            <input id="form-tanggallahir" name="tanggallahir" type="date" class="rounded-lg pl-1" required>
                             <label for="form-tempattinggal">Tempat tinggal</label>
-                            <input id="form-tempattinggal" name="tempat-tinggal" type="text" class="rounded-lg pl-1">
-                            <label for="form-bukti">Bukti Identitas</label>
-                            <input id="form-bukti" name="bagian" type="file" class="rounded-lg pl-1">
+                            <input id="form-tempattinggal" name="tempat-tinggal" type="text" class="rounded-lg pl-1" required>
                             <div id=form-button class="col-start-2 flex flex-grow-0 flex-row-reverse w-full">
                                 <button type="submit" class="col-start-2 bg-green-600 ml-2 text-white py-2 px-5 rounded-lg">Update</button>
-                                <button type="submit" class="col-start-2 bg-red-600 text-white py-2 px-5 rounded-lg">Reset</button>
+                                <button type="reset" id='tombol_reset' class="col-start-2 bg-red-600 text-white py-2 px-5 rounded-lg">Reset</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -90,11 +87,11 @@
                             text += "<label for="+jsonData.hasil[i].id+"><h2 class=font-bold>" + jsonData.hasil[i].nama    + "</h2>";
                             text += "</label> </div>";
                         }
-                        $('#hasil-buku').html(text+'<button type="submit" id=tekan></button>');
+                        $('#hasil-anggota').html(text+'<button type="submit" id=tekan></button>');
                     }
-                });
             });
-            $('#hasil-buku').submit(function(e) {
+            });
+            $('#hasil-anggota').submit(function(e) {
                 e.preventDefault();
                 $.ajax({
                     type: $(this).attr('method'),
@@ -110,8 +107,26 @@
                         $('#form-tempattinggal').attr("value",jsonData.hasil.tempattinggal);
                         $('#form-bukti').attr("value",jsonData.hasil.bukti);
                         if(!button){
-                            $("#form-button").append('<button onclick="buang()" type=button class="mr-2 col-start-2 bg-red-600 text-white py-2 px-5 rounded-lg">Delete<button>');
+                            $("#form-button").append('<button id="hapus" onclick="buang()" type=button class="mr-2 col-start-2 bg-red-600 text-white py-2 px-5 rounded-lg">Delete<button>');
                             button=1;
+                        }
+                    }
+                });
+            });
+            $('#insert-data').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: $(this).attr('method'),
+                    url: '/api/anggota/add.php',
+                    dataType: 'json',
+                    data: $(this).serialize() ,
+                    success: function(response) {
+                        var jsonData = response;
+                        if (jsonData.Transaction==1){
+                            alert ("data berhasil dimasukan");
+                            hapus_semua();
+                        }else{
+                            alert ('Try again');
                         }
                     }
                 });
@@ -121,7 +136,30 @@
             document.getElementById('tekan').click();
         }
         function buang() {
-
+            $.ajax({
+                type: $('#insert-data').attr('method'),
+                url: '/api/anggota/delete.php',
+                dataType: 'json',
+                data: {id :$('#form-id').val()},
+                success: function(response) {
+                    var jsonData = response;
+                    if (jsonData.Transaction==1){
+                        alert ("data berhasil dibuang");
+                        hapus_semua();
+                    }else{
+                        alert ('Try again');
+                    }
+                }
+            });
+        }
+        function hapus_semua() {
+            $('#hasil-anggota').html('');
+            $('#form-id').attr("value",'');
+            $('#form-nama').attr("value",'');
+            $('#form-tanggallahir').attr("value",'');
+            $('#form-tempattinggal').attr("value",'');
+            $('#tombol_reset').click();
+            $('#hapus').remove();
         }
     </script>
 </body>
